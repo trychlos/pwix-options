@@ -71,6 +71,7 @@ export class Options {
     getset_Bool_Fn( name, value, opts={} ){
         if( value !== undefined ){
             if( value === true || value === false || typeof value === 'function' ){
+                //console.log( name, 'set value to', value );
                 this._conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
@@ -78,11 +79,13 @@ export class Options {
             this._conf[name].options = opts;
         }
         let result = this._conf[name].value.get();
+        //console.log( name, 'set result to', result );
         if( typeof result === 'function' ){
             result = result();
         }
-        if( result !== true || result !== false
-            || ( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))){
+        if( result !== true && result !== false
+            && ( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
+            && ( this._conf[name].options.default !== undefined )){
 
                 let _default = this._conf[name].options.default;
                 if( typeof _default === 'function' ){
@@ -90,6 +93,7 @@ export class Options {
                 }
                 result = _default;
         }
+        //console.log( name, 'return result', result );
         return result;
     }
 
@@ -182,7 +186,7 @@ export class Options {
             if( typeof value === 'string' || typeof value === 'function' ){
                 this._conf[name].value.set( value );
             } else if( typeof value === 'object' && Object.keys( value ).includes( 'i18n' ) && Object.keys( value ).includes( 'namespace' )){
-                this._conf[name].value.set( i18n.label( value.namespace, value.i18n ));
+                this._conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
@@ -191,6 +195,8 @@ export class Options {
         let result = this._conf[name].value.get();
         if( typeof result === 'function' ){
             result = result();
+        } else if( typeof result === 'object' && Object.keys( result ).includes( 'i18n' ) && Object.keys( result ).includes( 'namespace' )){
+            result = i18n.label( result.namespace, result.i18n );
         }
         if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
             || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){

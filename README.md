@@ -45,13 +45,7 @@ This object mainly embed the `Options` class to be derived by the consumer.
 
 In accordance with advices from [the Meteor Guide](https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies), we do not hardcode NPM dependencies in `package.js`. Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 1.0.0:
-```
-```
-Each of these dependencies should be installed at application level:
-```
-    meteor npm install <package> --save
-```
+Dependencies as of v 1.0.0: _none_
 
 ## Translations
 
