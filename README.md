@@ -118,4 +118,4 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ---
 P. Wieser
-- Last updated on 2023, Feb. 2nd
+- Last updated on 2023, Feb. 18th
