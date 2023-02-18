@@ -26,6 +26,28 @@ export class Options {
     // private functions
     //
 
+    // scan the object from higher levels to deeper ones to find the known options
+    // - object: the object to be scanned
+    // - previous: a string which contains the previous - still unresolved - names
+    _scan( object, previous='' ){
+        const prefix = previous ? previous+'.' : '';
+        const self = this;
+        Object.keys( object ).every(( name ) => {
+            if( typeof self[prefix+name] === 'function' ){
+                self._conf[prefix+name] = {
+                    value: new ReactiveVar(),
+                    options: null
+                };
+                self[prefix+name]( object[name] );
+            } else if( typeof object[name] === 'object' ){
+                this._scan( object[name], prefix+name );
+            } else {
+                console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
+            }
+            return true;
+        });
+    }
+
     // public data
     //
 
@@ -41,18 +63,7 @@ export class Options {
         const self = this;
 
         // allocate a new reactive var for each known option and set it
-        Object.keys( options ).every(( name ) => {
-            if( typeof self[name] === 'function' ){
-                self._conf[name] = {
-                    value: new ReactiveVar(),
-                    options: null
-                };
-                self[name]( options[name] );
-            } else {
-                console.error( self.constructor.name, 'unmanaged configuration option', name );
-            }
-            return true;
-        });
+        this._scan( options );
 
         return this;
     }
@@ -166,6 +177,43 @@ export class Options {
             result = [result];
         }
         return result;
+    }
+
+    /**
+     * @summary Get or set a configuration option as a string or a function
+     * @param {String} name
+     * @param {String|Function} value
+     * @param {Object} opts
+     *  check: an optional check function, called with the value, must return true or false
+     *  default: an optional default value, or a function which returns a default value
+     *  ref: an optional array which contains accepted values
+     * @returns {String}
+     *  if the returned/computed value is not valid according to the check function or the reference array,
+     *  then we return the default value - or at least an empty string
+     */
+    getset_String_Fn( name, value, opts={} ){
+        if( value !== undefined ){
+            if( typeof value === 'string' || typeof value === 'function' ){
+                this._conf[name].value.set( value );
+            } else {
+                console.error( name, 'invalid argument:', value, opts );
+            }
+            this._conf[name].options = opts;
+        }
+        let result = this._conf[name].value.get();
+        if( typeof result === 'function' ){
+            result = result();
+        }
+        if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
+            || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
+
+                let _default = this._conf[name].options.default;
+                if( typeof _default === 'function' ){
+                    _default = _default();
+                }
+                result = _default;
+        }
+        return result || '';
     }
 
     /**

@@ -29,6 +29,71 @@ Add the package to your application.
 
 Then derive the provided `pwixOptions.Options` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
 
+## Example
+
+Say you have a package or an application which accepts a configuration object as:
+```
+    conf = {
+        level: {
+            key1: value1,
+            key2: value2
+        }
+        key3: value3
+    }
+```
+So you have to write a class which extends `pwixOptions.Options`  with one method for each configuration parameter:
+```
+    export class myOptions extends pwixOptions.Options {
+
+        static Constants = [
+            KEY_CONSTANT_A,
+            KEY_CONSTANT_A
+        ];
+
+        /**
+        * Constructor
+        * @param {Object} options the options to be managed
+        *
+        * The Options base class takes care of managing the known options, either as a value, or as a function which return a value.
+        * In some case where the expected value is a string, the base class also can accept an object with 'namespace' and 'i18n' keys.
+        * All options are accepted as long as the corresponding getter/setter method exists in this derived class.
+        *
+        * @returns {myOptions}
+        */
+        constructor( options ){
+            super( options );
+            return this;
+        }
+
+        /**
+        * Getter/Setter
+        * @param {String|Function} value the prefix of the collection's name
+        * @returns {String}
+        */
+        'level.key1'( value ){
+            return this.getset_String_Array_Fn( 'level.key1', value, { default: defaults.level.key1 });
+        }
+
+        /**
+        * Getter/Setter
+        * @param {String|Function} value the default access mode of a new forum
+        * @returns {String}
+        */
+        'level.key2'( value ){
+            return this.getset_String_Fn( 'level.key2', value, { default: defaults.level.key1, ref: myOptions.Constants });
+        }
+
+        /**
+        * Getter/Setter
+        * @param {String|Function} value the default access mode of a new forum
+        * @returns {String}
+        */
+        key3( value ){
+            return this.getset_Integer_Fn( 'key3', value, { default: defaults.common.key3 });
+        }
+    }
+```
+
 ## Configuration
 
 None at the time.
