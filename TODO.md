@@ -10,7 +10,8 @@
 
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
-|    1 |  |  |
+|    1 | 2023- 2-18 | Have a better name for the Options methods |
+|    2 |  |  |
 
 ---
 ## Done
