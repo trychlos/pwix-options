@@ -1,4 +1,4 @@
-# pwix:options - README
+# pwix:options
 
 ## What is it ?
 
@@ -118,4 +118,4 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ---
 P. Wieser
-- Last updated on 2023, Feb. 18th
+- Last updated on 2023, Apr. 30th
