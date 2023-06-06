@@ -4,7 +4,9 @@
 
 ### 1.2.1
 
-    Release date: xxx
+    Release date: 2023- 6- 6
+
+    - Add merge dependency (omitted from v 1.2.0)
 
 ### 1.2.0
 
