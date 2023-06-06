@@ -4,10 +4,10 @@
 
 ### 1.2.0
 
-    Release date: xxx
+    Release date: 2023- 6- 6
 
-    - Introduce `pwixOptions.configure()` method
-    - Introduce `errOnUnmanaged` configuration option
+    - Introduce 'pwixOptions.configure()' method
+    - Introduce 'errOnUnmanaged' configuration option
 
 ### 1.1.0
 
@@ -24,4 +24,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Feb. 18th
+- Last updated on 2023, June 6th

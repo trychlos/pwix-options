@@ -138,6 +138,12 @@ The globally exported object.
 
     The class to be derived by the consumer.
 
+### Methods
+
+- `pwixOptions.configure()`
+
+    The configuration method.
+
 ## NPM peer dependencies
 
 In accordance with advices from [the Meteor Guide](https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies), we do not hardcode NPM dependencies in `package.js`. Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
@@ -150,4 +156,4 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ---
 P. Wieser
-- Last updated on 2023, Apr. 30th
+- Last updated on 2023, June 6th
