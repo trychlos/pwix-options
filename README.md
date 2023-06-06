@@ -148,7 +148,11 @@ The globally exported object.
 
 In accordance with advices from [the Meteor Guide](https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies), we do not hardcode NPM dependencies in `package.js`. Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 1.0.0: _none_
+Dependencies as of v 1.2.0:
+
+```
+    'merge': '^2.1.1'
+```
 
 ## Translations
 
