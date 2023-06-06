@@ -10,7 +10,7 @@
 
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { pwixI18n as i18n } from 'meteor/pwix:i18n';
+import { pwixI18n } from 'meteor/pwix:i18n';
 
 export class Options {
 
@@ -41,7 +41,7 @@ export class Options {
                 self[prefix+name]( object[name] );
             } else if( typeof object[name] === 'object' ){
                 this._scan( object[name], prefix+name );
-            } else {
+            } else if( pwixOptions._conf.errOnUnmanaged ){
                 console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
             }
             return true;
@@ -244,7 +244,7 @@ export class Options {
         if( typeof result === 'function' ){
             result = result();
         } else if( typeof result === 'object' && Object.keys( result ).includes( 'i18n' ) && Object.keys( result ).includes( 'namespace' )){
-            result = i18n.label( result.namespace, result.i18n );
+            result = pwixI18n.label( result.namespace, result.i18n );
         }
         if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
             || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){

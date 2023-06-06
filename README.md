@@ -96,15 +96,47 @@ So you have to write a class which extends `pwixOptions.Options`  with one metho
 
 ## Configuration
 
-None at the time.
+The package's behavior can be configured through a call to the `pwixOptions.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
+
+Known configuration options are:
+
+- `errOnUnmanaged`
+
+    Whether an unmanaged option, which do not have any implementation method, should trigger an error.
+
+    Defaults to `false`.
+
+- `verbosity`
+
+    Define the expected verbosity level.
+
+    The accepted value can be:
+
+    - `OPTS_VERBOSE_NONE`
+
+        Do not display any trace log to the console
+
+    or any or-ed combination of following:
+
+    - `OPTS_VERBOSE_CONFIGURE`
+
+        Trace `pwixOptions.configure()` calls and their result
+
+Please note that `pwixOptions.configure()` method should be called in the same terms both in client and server sides.
+
+Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `pwixOptions.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
 
 ## What does it provide ?
 
-### An exported object
+### `pwixOptions`
 
-`pwixOptions`
+The globally exported object.
 
-This object mainly embed the `Options` class to be derived by the consumer.
+### Classes
+
+- `pwixOptions.Options`
+
+    The class to be derived by the consumer.
 
 ## NPM peer dependencies
 

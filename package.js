@@ -1,6 +1,6 @@
 Package.describe({
     name: 'pwix:options',
-    version: '1.1.1-rc',
+    version: '1.2.0-rc',
     summary: 'Configuration options management',
     git: 'https://github.com/trychlos/pwix-options',
     documentation: 'README.md'
@@ -9,7 +9,9 @@ Package.describe({
 Package.onUse( function( api ){
     configure( api );
     api.export([
-        'pwixOptions'
+        'pwixOptions',
+        'OPTS_VBERBOSE_NONE',
+        'OPTS_VERBOSE_CONFIGURE'
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );

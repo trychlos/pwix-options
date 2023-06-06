@@ -9,4 +9,6 @@ if( false ){
 }
 
 checkNpmVersions({
-}, 'pwix:options' );
+},
+    'pwix:options'
+);
