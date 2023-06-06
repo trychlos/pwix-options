@@ -2,6 +2,10 @@
 
 ## ChangeLog
 
+### 1.2.1
+
+    Release date: xxx
+
 ### 1.2.0
 
     Release date: 2023- 6- 6
