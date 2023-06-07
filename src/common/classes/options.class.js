@@ -32,18 +32,24 @@ export class Options {
     _scan( object, previous='' ){
         const prefix = previous ? previous+'.' : '';
         const self = this;
+
         Object.keys( object ).every(( name ) => {
             if( typeof self[prefix+name] === 'function' ){
-                self._conf[prefix+name] = {
-                    value: new ReactiveVar(),
-                    options: null
-                };
+                if( !Object.keys( self._conf ).includes( prefix+name )){
+                    self._conf[prefix+name] = {
+                        value: new ReactiveVar(),
+                        options: null
+                    };
+                }
                 self[prefix+name]( object[name] );
+
             } else if( typeof object[name] === 'object' ){
                 this._scan( object[name], prefix+name );
+
             } else if( pwixOptions._conf.errOnUnmanaged ){
                 console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
             }
+
             return true;
         });
     }
@@ -56,15 +62,18 @@ export class Options {
 
     /**
      * Constructor
-     * @param {Object} options the options to be managed (may be empty, but must be defined)
+     *
+     * @param {Object} options the options to be managed (optional)
+     *  The options can be passed to the class either at construction time, and/or through the set() method.
+     *  Rationale: option values may change over the time, and we do not want this class be a break to their reactivity.
+     *  The caller may pass options to this constructor, but should too call the set() method from an autorun() section.
+     *
      * @returns {acOptions}
      */
     constructor( options ){
-        const self = this;
-
-        // allocate a new reactive var for each known option and set it
-        this._scan( options );
-
+        if( arguments.length >= 1 ){
+            this.set( options );
+        }
         return this;
     }
 
@@ -256,5 +265,14 @@ export class Options {
                 result = _default;
         }
         return result || '';
+    }
+
+    /**
+     * @summary Take options or a new version of the options
+     * @param {Object} options the options to be managed (may be empty, but must be defined)
+     */
+    set( options ){
+        // allocate a new reactive var for each known option and set it
+        this._scan( options );
     }
 }

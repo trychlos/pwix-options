@@ -138,6 +138,64 @@ The globally exported object.
 
     The class to be derived by the consumer.
 
+    - `Options( [options] )`
+
+        The constructor.
+
+        It accepts an optional list of options as an argument.
+
+        If the caller expects the option values to change over the time, then it should also call the below `set()` method from inside an `autorun()` section.
+
+    - `set( options )`
+
+        Set the new option values.
+
+    - `getset_Bool_Fn( name, value [, opts ] )`
+
+        Manage a boolean argument.
+
+        Accepts also as a value a function which returns a boolean argument.
+
+        `opts` is an optional option object with keys:
+
+        - `check`
+
+            An optional check function, called with the provided value, must return `true` or `false`
+
+        - `default`
+
+            An optional default value, or a function which returns the default value
+
+        Note that if the returned/computed value is not valid according to the `check()` function, then we return the default value, which may itself be undefined. If the caller has not provided any valid default value, he must so prepare to handle that.
+
+    - `getset_Integer_Fn( name, value [, opts ] )`
+
+        Manage an integer argument.
+
+        Accepts also as a value a function which returns an integer argument.
+
+    - `getset_String_Array_Fn( name, value [, opts ] )`
+
+        Manage a string or an array of strings.
+
+        Accepts also as a value a function which returns a string or an array of strings.
+
+    - `getset_String_Fn( name, value [, opts ] )`
+
+        Manage a string argument.
+
+        Accepts also as a value a function which returns a string argument.
+
+        Besides `check` and `default` keys, `opts` also accepts a `ref` argument which is expected to address an array of accepted values.
+
+    - `getset_String_Fn_Object( name, value [, opts ] )`
+
+        Manage a string or an object.
+
+        Accepts also as a value a function which returns a string or an object.
+
+        This is actually a method to handle internationalization where strings are provided not by their localized text value, but by an object `{ namespace, i18n }`.
+
 ### Methods
 
 - `pwixOptions.configure()`
@@ -160,4 +218,4 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ---
 P. Wieser
-- Last updated on 2023, June 6th
+- Last updated on 2023, June 7th
