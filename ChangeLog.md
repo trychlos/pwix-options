@@ -2,11 +2,11 @@
 
 ## ChangeLog
 
-### 1.2.2
+### 1.3.0
 
-    Release date: xxx
+    Release date: 2023- 6- 7
 
-    - 
+    - Define set() method which let us provide reactivity to the option values (at last)
 
 ### 1.2.1
 
@@ -36,4 +36,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 6th
+- Last updated on 2023, June 7th
