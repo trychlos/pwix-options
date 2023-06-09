@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.4.0-rc
+### 1.4.0
 
-    Release date: xxx
+    Release date: 2023- 6- 9
 
     - Define getset_Fn() method
     - Bump pwix:i18n requirement to v 1.3.2
@@ -43,4 +43,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 7th
+- Last updated on 2023, June 9th
