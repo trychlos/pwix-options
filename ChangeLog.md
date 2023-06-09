@@ -7,6 +7,7 @@
     Release date: xxx
 
     - Define getset_Fn() method
+    - Bump pwix:i18n requirement to v 1.3.2
 
 ### 1.3.0
 
