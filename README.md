@@ -168,6 +168,16 @@ The globally exported object.
 
         Note that if the returned/computed value is not valid according to the `check()` function, then we return the default value, which may itself be undefined. If the caller has not provided any valid default value, he must so prepare to handle that.
 
+    - `getset_Bool_Fn( name, value [, opts ] )`
+
+        Manage a boolean argument.
+
+        Accepts also as a value a function which returns a boolean argument.
+
+    - `getset_Fn( name, value [, opts ] )`
+
+        Manage a function argument.
+
     - `getset_Integer_Fn( name, value [, opts ] )`
 
         Manage an integer argument.

@@ -118,6 +118,34 @@ export class Options {
     }
 
     /**
+     * @summary Get or set a configuration option as a function
+     * @param {String} name
+     * @param {Function} value
+     * @param {Object} opts
+     *  check: an optional check function, called with the value, must return true or false
+     *  default: an optional default value, either a function or null
+     * @returns {Function}
+     *  if the returned/computed value is not valid according to the check function, then we return the default value
+     *  which may happen to be undefined :(
+     */
+    getset_Fn( name, value, opts={} ){
+        if( value !== undefined ){
+            if( value === null || typeof value === 'function' ){
+                this._conf[name].value.set( value );
+            } else {
+                console.error( name, 'invalid argument:', value, opts );
+            }
+            this._conf[name].options = opts;
+        }
+        let result = this._conf[name].value.get();
+        if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+            let _default = this._conf[name].options.default;
+            result = _default;
+        }
+        return result;
+    }
+
+    /**
      * @summary Get or set a configuration option as an integer or a function
      * @param {String} name 
      * @param {Integer|Function} value 

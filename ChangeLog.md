@@ -2,11 +2,11 @@
 
 ## ChangeLog
 
-### 1.3.1-rc
+### 1.4.0-rc
 
     Release date: xxx
 
-    - 
+    - Define getset_Fn() method
 
 ### 1.3.0
 
