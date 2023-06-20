@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.4.1-rc
+### 1.4.1
 
-    Release date: 
+    Release date: 2023- 6-20
 
     - Replace merge dependency with lodash
 
@@ -49,4 +49,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 9th
+- Last updated on 2023, June 20th
