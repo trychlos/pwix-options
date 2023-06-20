@@ -9,7 +9,7 @@ if( false ){
 }
 
 checkNpmVersions({
-    'merge': '^2.1.1'
+    'lodash': '^4.17.0'
 },
     'pwix:options'
 );

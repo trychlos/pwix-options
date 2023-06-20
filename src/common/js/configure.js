@@ -2,7 +2,7 @@
  * pwix:options/src/common/js/configure.js
  */
 
-import merge from 'merge';
+import _ from 'lodash';
 
 pwixOptions._defaults = {
     errOnUnmanaged: false,
@@ -10,7 +10,7 @@ pwixOptions._defaults = {
 };
 
 pwixOptions.configure = function( o ){
-    pwixOptions._conf = merge.recursive( true, pwixOptions._defaults, o );
+    _.merge( pwixOptions._conf, pwixOptions._defaults, o );
 
     // be verbose if asked for
     if( pwixOptions._conf.verbosity & OPTS_VERBOSE_CONFIGURE ){
@@ -18,4 +18,4 @@ pwixOptions.configure = function( o ){
     }
 }
 
-pwixOptions._conf = merge.recursive( true, pwixOptions._defaults );
+_.merge( pwixOptions._conf, pwixOptions._defaults );
