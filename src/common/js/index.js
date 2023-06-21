@@ -2,7 +2,7 @@
  * pwix:options/src/common/js/index.js
  */
 
-import './options.js';
+import './global.js';
 //
 import './constants.js';
 //
