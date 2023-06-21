@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - configure() now also acts as a getter
 
 ### 1.4.1
 
