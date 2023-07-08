@@ -2,11 +2,12 @@
 
 ## ChangeLog
 
-### 1.4.2-rc
+### 1.5.0-rc
 
     Release date: 
 
     - configure() now also acts as a getter
+    - Rename Options class to BaseOpt (bumping candidate version number)
 
 ### 1.4.1
 

@@ -1,5 +1,5 @@
 /*
- * pwix:options/src/common/classes/options.class.js
+ * pwix:options/src/common/classes/base.class.js
  *
  * This class manages the configuration options.
  * It is expected to be derived by each consumer.
@@ -12,7 +12,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import { pwixI18n } from 'meteor/pwix:i18n';
 
-export class Options {
+export class BaseOpt {
 
     // static data
     //

@@ -10,7 +10,7 @@
 
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
-|    1 | 2023- 2-18 | Have a better name for the Options methods |
+|    1 | 2023- 2-18 | Have a better name for the BaseOpt methods |
 |    2 |  |  |
 
 ---

@@ -12,7 +12,7 @@ We want that our configuration options also accept functions which returns expec
 
 More we want these configuration options be reactive.
 
-The exported `Options` class provides the methods required to:
+The exported `BaseOpt` class provides the methods required to:
 
 - check the provided option
 - check the result of a provided function
@@ -27,7 +27,7 @@ Add the package to your application.
     meteor add pwix:options
 ```
 
-Then derive the provided `pwixOptions.Options` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
+Then derive the provided `pwixOptions.BaseOpt` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
 
 ## Example
 
@@ -41,9 +41,9 @@ Say you have a package or an application which accepts a configuration object as
         key3: value3
     }
 ```
-So you have to write a class which extends `pwixOptions.Options`  with one method for each configuration parameter:
+So you have to write a class which extends `pwixOptions.BaseOpt`  with one method for each configuration parameter:
 ```
-    export class myOptions extends pwixOptions.Options {
+    export class myOptions extends pwixOptions.BaseOpt {
 
         static Constants = [
             KEY_CONSTANT_A,
@@ -54,7 +54,7 @@ So you have to write a class which extends `pwixOptions.Options`  with one metho
         * Constructor
         * @param {Object} options the options to be managed
         *
-        * The Options base class takes care of managing the known options, either as a value, or as a function which return a value.
+        * The BaseOpt base class takes care of managing the known options, either as a value, or as a function which return a value.
         * In some case where the expected value is a string, the base class also can accept an object with 'namespace' and 'i18n' keys.
         * All options are accepted as long as the corresponding getter/setter method exists in this derived class.
         *
@@ -134,11 +134,11 @@ The globally exported object.
 
 ### Classes
 
-- `pwixOptions.Options`
+- `pwixOptions.BaseOpt`
 
     The class to be derived by the consumer.
 
-    - `Options( [options] )`
+    - `BaseOpt( [options] )`
 
         The constructor.
 
