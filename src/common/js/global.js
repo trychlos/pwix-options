@@ -4,7 +4,7 @@
 
 import { BaseOpt } from '../classes/base.class.js';
 
-pwixOptions = {
+Options = {
     // package configuration
     _conf: {},
 

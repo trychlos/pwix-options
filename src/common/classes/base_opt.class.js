@@ -46,7 +46,7 @@ export class BaseOpt {
             } else if( typeof object[name] === 'object' ){
                 this._scan( object[name], prefix+name );
 
-            } else if( pwixOptions._conf.errOnUnmanaged ){
+            } else if( Options._conf.errOnUnmanaged ){
                 console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
             }
 

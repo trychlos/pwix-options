@@ -4,7 +4,7 @@
 
 import _ from 'lodash';
 
-pwixOptions._defaults = {
+Options._defaults = {
     errOnUnmanaged: false,
     verbosity: OPTS_VERBOSE_NONE
 };
@@ -15,16 +15,16 @@ pwixOptions._defaults = {
  * @param {Object} o configuration options
  * @returns {Object} the package configuration
  */
-pwixOptions.configure = function( o ){
+Options.configure = function( o ){
     if( o && _.isObject( o )){
-        _.merge( pwixOptions._conf, pwixOptions._defaults, o );
+        _.merge( Options._conf, Options._defaults, o );
         // be verbose if asked for
-        if( pwixOptions._conf.verbosity & OPTS_VERBOSE_CONFIGURE ){
-            console.debug( 'pwix:admin-first configure() with', o, 'building', pwixOptions._conf );
+        if( Options._conf.verbosity & OPTS_VERBOSE_CONFIGURE ){
+            console.debug( 'pwix:admin-first configure() with', o, 'building', Options._conf );
         }
     }
     // also acts as a getter
-    return pwixOptions._conf;
+    return Options._conf;
 }
 
-_.merge( pwixOptions._conf, pwixOptions._defaults );
+_.merge( Options._conf, Options._defaults );

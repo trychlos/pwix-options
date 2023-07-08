@@ -9,7 +9,7 @@ Package.describe({
 Package.onUse( function( api ){
     configure( api );
     api.export([
-        'pwixOptions',
+        'Options',
         'OPTS_VBERBOSE_NONE',
         'OPTS_VERBOSE_CONFIGURE'
     ]);

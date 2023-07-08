@@ -27,7 +27,7 @@ Add the package to your application.
     meteor add pwix:options
 ```
 
-Then derive the provided `pwixOptions.BaseOpt` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
+Then derive the provided `Options.BaseOpt` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
 
 ## Example
 
@@ -41,9 +41,9 @@ Say you have a package or an application which accepts a configuration object as
         key3: value3
     }
 ```
-So you have to write a class which extends `pwixOptions.BaseOpt`  with one method for each configuration parameter:
+So you have to write a class which extends `Options.BaseOpt`  with one method for each configuration parameter:
 ```
-    export class myOptions extends pwixOptions.BaseOpt {
+    export class myOptions extends Options.BaseOpt {
 
         static Constants = [
             KEY_CONSTANT_A,
@@ -96,7 +96,7 @@ So you have to write a class which extends `pwixOptions.BaseOpt`  with one metho
 
 ## Configuration
 
-The package's behavior can be configured through a call to the `pwixOptions.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
+The package's behavior can be configured through a call to the `Options.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
 
 Known configuration options are:
 
@@ -120,21 +120,21 @@ Known configuration options are:
 
     - `OPTS_VERBOSE_CONFIGURE`
 
-        Trace `pwixOptions.configure()` calls and their result
+        Trace `Options.configure()` calls and their result
 
-Please note that `pwixOptions.configure()` method should be called in the same terms both in client and server sides.
+Please note that `Options.configure()` method should be called in the same terms both in client and server sides.
 
-Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `pwixOptions.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
+Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `Options.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
 
 ## What does it provide ?
 
-### `pwixOptions`
+### `Options`
 
 The globally exported object.
 
 ### Classes
 
-- `pwixOptions.BaseOpt`
+- `Options.BaseOpt`
 
     The class to be derived by the consumer.
 
@@ -208,7 +208,7 @@ The globally exported object.
 
 ### Methods
 
-- `pwixOptions.configure()`
+- `Options.configure()`
 
     The configuration method.
 
