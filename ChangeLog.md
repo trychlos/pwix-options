@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.0.0-rc
+### 2.0.0
 
-    Release date: 
+    Release date: 2023- 7- 9
 
     - configure() now also acts as a getter
     - Rename Options class to BaseOpt
@@ -60,4 +60,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 20th
+- Last updated on 2023, July 9th

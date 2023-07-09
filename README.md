@@ -220,7 +220,7 @@ The globally exported object.
 
 In accordance with advices from [the Meteor Guide](https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies), we do not hardcode NPM dependencies in `package.js`. Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 1.4.1:
+Dependencies as of v 2.0.0:
 
 ```
     'lodash': '^4.17.0'
@@ -232,4 +232,4 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ---
 P. Wieser
-- Last updated on 2023, June 20th
+- Last updated on 2023, July 9th
