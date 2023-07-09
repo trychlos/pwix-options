@@ -150,6 +150,10 @@ The globally exported object.
 
         Set the new option values.
 
+    - `options()`
+
+        Returns the list of options.
+
     - `getset_Bool_Fn( name, value [, opts ] )`
 
         Manage a boolean argument.

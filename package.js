@@ -9,9 +9,7 @@ Package.describe({
 Package.onUse( function( api ){
     configure( api );
     api.export([
-        'Options',
-        'OPTS_VBERBOSE_NONE',
-        'Options.C.Verbose.CONFIGURE'
+        'Options'
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );

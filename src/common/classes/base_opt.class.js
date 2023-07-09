@@ -296,6 +296,13 @@ export class BaseOpt {
     }
 
     /**
+     * @returns {Array} the list of defined option names
+     */
+    options(){
+        return Object.keys( this._conf );
+    }
+
+    /**
      * @summary Take options or a new version of the options
      * @param {Object} options the options to be managed (may be empty, but must be defined)
      */

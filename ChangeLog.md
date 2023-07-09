@@ -10,6 +10,7 @@
     - Rename Options class to BaseOpt (bumping candidate version number)
     - Renamed globally exported pwixOptions to Options
     - Reorganize constants to not pollute global space
+    - Define new options() method
 
 ### 1.4.1
 
