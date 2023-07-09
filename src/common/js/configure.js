@@ -4,6 +4,8 @@
 
 import _ from 'lodash';
 
+Options._conf = {};
+
 Options._defaults = {
     errOnUnmanaged: false,
     verbosity: Options.C.Verbose.NONE

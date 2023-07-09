@@ -5,9 +5,6 @@
 import { BaseOpt } from '../classes/base.class.js';
 
 Options = {
-    // package configuration
-    _conf: {},
-
     // the exported class
     BaseOpt: BaseOpt
 };
