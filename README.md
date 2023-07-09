@@ -71,7 +71,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * @returns {String}
         */
         'level.key1'( value ){
-            return this.getset_String_Array_Fn( 'level.key1', value, { default: defaults.level.key1 });
+            return this.baseOpt_gsStringArrayFn( 'level.key1', value, { default: defaults.level.key1 });
         }
 
         /**
@@ -80,7 +80,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * @returns {String}
         */
         'level.key2'( value ){
-            return this.getset_String_Fn( 'level.key2', value, { default: defaults.level.key1, ref: myOptions.Constants });
+            return this.baseOpt_gsStringFn( 'level.key2', value, { default: defaults.level.key1, ref: myOptions.Constants });
         }
 
         /**
@@ -89,7 +89,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * @returns {String}
         */
         key3( value ){
-            return this.getset_Integer_Fn( 'key3', value, { default: defaults.common.key3 });
+            return this.baseOpt_gsIntegerFn( 'key3', value, { default: defaults.common.key3 });
         }
     }
 ```
@@ -146,15 +146,7 @@ The globally exported object.
 
         If the caller expects the option values to change over the time, then it should also call the below `set()` method from inside an `autorun()` section.
 
-    - `set( options )`
-
-        Set the new option values.
-
-    - `options()`
-
-        Returns the list of options.
-
-    - `getset_Bool_Fn( name, value [, opts ] )`
+    - `baseOpt_gsBoolFn( name, value [, opts ] )`
 
         Manage a boolean argument.
 
@@ -172,29 +164,29 @@ The globally exported object.
 
         Note that if the returned/computed value is not valid according to the `check()` function, then we return the default value, which may itself be undefined. If the caller has not provided any valid default value, he must so prepare to handle that.
 
-    - `getset_Bool_Fn( name, value [, opts ] )`
+    - `baseOpt_gsBoolFn( name, value [, opts ] )`
 
         Manage a boolean argument.
 
         Accepts also as a value a function which returns a boolean argument.
 
-    - `getset_Fn( name, value [, opts ] )`
+    - `baseOpt_gsFn( name, value [, opts ] )`
 
         Manage a function argument.
 
-    - `getset_Integer_Fn( name, value [, opts ] )`
+    - `baseOpt_gsIntegerFn( name, value [, opts ] )`
 
         Manage an integer argument.
 
         Accepts also as a value a function which returns an integer argument.
 
-    - `getset_String_Array_Fn( name, value [, opts ] )`
+    - `baseOpt_gsStringArrayFn( name, value [, opts ] )`
 
         Manage a string or an array of strings.
 
         Accepts also as a value a function which returns a string or an array of strings.
 
-    - `getset_String_Fn( name, value [, opts ] )`
+    - `baseOpt_gsStringFn( name, value [, opts ] )`
 
         Manage a string argument.
 
@@ -202,13 +194,21 @@ The globally exported object.
 
         Besides `check` and `default` keys, `opts` also accepts a `ref` argument which is expected to address an array of accepted values.
 
-    - `getset_String_Fn_Object( name, value [, opts ] )`
+    - `baseOpt_gsStringObjectFn( name, value [, opts ] )`
 
         Manage a string or an object.
 
         Accepts also as a value a function which returns a string or an object.
 
         This is actually a method to handle internationalization where strings are provided not by their localized text value, but by an object `{ namespace, i18n }`.
+
+    - `baseOpt_options()`
+
+        Returns the list of options.
+
+    - `baseOpt_set( options )`
+
+        Set the new option values.
 
 ### Methods
 
