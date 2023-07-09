@@ -9,6 +9,7 @@
     - configure() now also acts as a getter
     - Rename Options class to BaseOpt (bumping candidate version number)
     - Renamed globally exported pwixOptions to Options
+    - Reorganize constants to not pollute global space
 
 ### 1.4.1
 

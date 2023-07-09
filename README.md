@@ -112,13 +112,13 @@ Known configuration options are:
 
     The accepted value can be:
 
-    - `OPTS_VERBOSE_NONE`
+    - `Options.C.Verbose.NONE`
 
         Do not display any trace log to the console
 
     or any or-ed combination of following:
 
-    - `OPTS_VERBOSE_CONFIGURE`
+    - `Options.C.Verbose.CONFIGURE`
 
         Trace `Options.configure()` calls and their result
 

@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 Options._defaults = {
     errOnUnmanaged: false,
-    verbosity: OPTS_VERBOSE_NONE
+    verbosity: Options.C.Verbose.NONE
 };
 
 /**
@@ -19,7 +19,7 @@ Options.configure = function( o ){
     if( o && _.isObject( o )){
         _.merge( Options._conf, Options._defaults, o );
         // be verbose if asked for
-        if( Options._conf.verbosity & OPTS_VERBOSE_CONFIGURE ){
+        if( Options._conf.verbosity & Options.C.Verbose.CONFIGURE ){
             console.debug( 'pwix:admin-first configure() with', o, 'building', Options._conf );
         }
     }

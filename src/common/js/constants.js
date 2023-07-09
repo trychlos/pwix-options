@@ -2,7 +2,10 @@
  * pwix:options/src/common/js/constants.js
  */
 
-// exported
-
-OPTS_VERBOSE_NONE = 0;
-OPTS_VERBOSE_CONFIGURE = 0x01 << 0;
+Options.C = {
+    // verbosity levels
+    Verbose: {
+        NONE: 0,
+        CONFIGURE: 0x01 << 0
+    }
+};

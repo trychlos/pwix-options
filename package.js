@@ -11,7 +11,7 @@ Package.onUse( function( api ){
     api.export([
         'Options',
         'OPTS_VBERBOSE_NONE',
-        'OPTS_VERBOSE_CONFIGURE'
+        'Options.C.Verbose.CONFIGURE'
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );
