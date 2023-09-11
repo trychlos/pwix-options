@@ -2,21 +2,21 @@
 
 ## ChangeLog
 
-### 2.0.1-rc
+### 2.1.0-rc
 
     Release date: 
 
-    - 
+    - Rename BaseOpt class to Base (bumping candidate version number)
 
 ### 2.0.0
 
     Release date: 2023- 7- 9
 
     - configure() now also acts as a getter
-    - Rename Options class to BaseOpt
+    - Rename Options class to Base
     - Renamed globally exported pwixOptions to Options
     - Reorganize constants to not pollute global space
-    - Define new baseOpt_options() method
+    - Define new baseions() method
     - Rename whole API (bumping candidate version number)
 
 ### 1.4.1
@@ -29,7 +29,7 @@
 
     Release date: 2023- 6- 9
 
-    - Define baseOpt_gsFn() method
+    - Define base_gsFn() method
     - Bump pwix:i18n requirement to v 1.3.2
 
 ### 1.3.0

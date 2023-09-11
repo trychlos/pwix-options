@@ -12,7 +12,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import { pwixI18n } from 'meteor/pwix:i18n';
 
-export class BaseOpt {
+export class Base {
 
     // static data
     //
@@ -64,15 +64,15 @@ export class BaseOpt {
      * Constructor
      *
      * @param {Object} options the options to be managed (optional)
-     *  The options can be passed to the class either at construction time, and/or through the baseOpt_set() method.
+     *  The options can be passed to the class either at construction time, and/or through the base_set() method.
      *  Rationale: option values may change over the time, and we do not want this class be a break to their reactivity.
-     *  The caller may pass options to this constructor, but should too call the baseOpt_set() method from an autorun() section.
+     *  The caller may pass options to this constructor, but should too call the base_set() method from an autorun() section.
      *
-     * @returns {acOptions}
+     * @returns {Base}
      */
     constructor( options ){
         if( arguments.length >= 1 ){
-            this.baseOpt_set( options );
+            this.base_set( options );
         }
         return this;
     }
@@ -88,7 +88,7 @@ export class BaseOpt {
      *  if the returned/computed value is not valid according to the check function, then we return the default value
      *  which may happen to be undefined :(
      */
-    baseOpt_gsBoolFn( name, value, opts={} ){
+    base_gsBoolFn( name, value, opts={} ){
         if( value !== undefined ){
             if( value === true || value === false || typeof value === 'function' ){
                 //console.log( name, 'set value to', value );
@@ -128,7 +128,7 @@ export class BaseOpt {
      *  if the returned/computed value is not valid according to the check function, then we return the default value
      *  which may happen to be undefined :(
      */
-    baseOpt_gsFn( name, value, opts={} ){
+    base_gsFn( name, value, opts={} ){
         if( value !== undefined ){
             if( value === null || typeof value === 'function' ){
                 this._conf[name].value.set( value );
@@ -156,7 +156,7 @@ export class BaseOpt {
      *  if the returned/computed value is not valid according to the check function, then we return the default value
      *  which may happen to be undefined :(
      */
-    baseOpt_gsIntegerFn( name, value, opts={} ){
+    base_gsIntegerFn( name, value, opts={} ){
         if( value !== undefined ){
             if( typeof value === 'function' ){
                 this._conf[name].value.set( value );
@@ -188,7 +188,7 @@ export class BaseOpt {
      *  default: an optional default value, or a function which returns a default value
      * @returns {Array} an array of strings
      */
-    baseOpt_gsStringArrayFn( name, value, opts={} ){
+    base_gsStringArrayFn( name, value, opts={} ){
         if( value !== undefined ){
             if( typeof value === 'string' || Array.isArray( value ) || typeof value === 'function' ){
                 this._conf[name].value.set( value );
@@ -228,7 +228,7 @@ export class BaseOpt {
      *  if the returned/computed value is not valid according to the check function or the reference array,
      *  then we return the default value - or at least an empty string
      */
-    baseOpt_gsStringFn( name, value, opts={} ){
+    base_gsStringFn( name, value, opts={} ){
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
                 this._conf[name].value.set( value );
@@ -266,7 +266,7 @@ export class BaseOpt {
      *  if the returned/computed value is not valid according to the check function or the reference array,
      *  then we return the default value - or at least an empty string
      */
-    baseOpt_gsStringObjectFn( name, value, opts={} ){
+    base_gsStringObjectFn( name, value, opts={} ){
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
                 this._conf[name].value.set( value );
@@ -298,7 +298,7 @@ export class BaseOpt {
     /**
      * @returns {Array} the list of defined option names
      */
-    baseOpt_options(){
+    base_options(){
         return Object.keys( this._conf );
     }
 
@@ -306,7 +306,7 @@ export class BaseOpt {
      * @summary Take options or a new version of the options
      * @param {Object} options the options to be managed (may be empty, but must be defined)
      */
-    baseOpt_set( options ){
+    base_set( options ){
         // allocate a new reactive var for each known option and set it
         this._scan( options );
     }

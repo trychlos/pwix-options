@@ -2,9 +2,9 @@
  * pwix:options/src/common/js/global.js
  */
 
-import { BaseOpt } from '../classes/base_opt.class.js';
+import { Base } from '../classes/base.class.js';
 
 Options = {
     // the exported class
-    BaseOpt: BaseOpt
+    Base: Base
 };
