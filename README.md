@@ -12,7 +12,7 @@ We want that our configuration options also accept functions which returns expec
 
 More we want these configuration options be reactive.
 
-The exported `BaseOpt` class provides the methods required to:
+The exported `Base` class provides the methods required to:
 
 - check the provided option
 - check the result of a provided function
@@ -27,7 +27,7 @@ Add the package to your application.
     meteor add pwix:options
 ```
 
-Then derive the provided `Options.BaseOpt` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
+Then derive the provided `Options.Base` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
 
 ## Example
 
@@ -41,9 +41,9 @@ Say you have a package or an application which accepts a configuration object as
         key3: value3
     }
 ```
-So you have to write a class which extends `Options.BaseOpt`  with one method for each configuration parameter:
+So you have to write a class which extends `Options.Base`  with one method for each configuration parameter:
 ```
-    export class myOptions extends Options.BaseOpt {
+    export class myOptions extends Options.Base {
 
         static Constants = [
             KEY_CONSTANT_A,
@@ -54,7 +54,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * Constructor
         * @param {Object} options the options to be managed
         *
-        * The BaseOpt base class takes care of managing the known options, either as a value, or as a function which return a value.
+        * The Base base class takes care of managing the known options, either as a value, or as a function which return a value.
         * In some case where the expected value is a string, the base class also can accept an object with 'namespace' and 'i18n' keys.
         * All options are accepted as long as the corresponding getter/setter method exists in this derived class.
         *
@@ -71,7 +71,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * @returns {String}
         */
         'level.key1'( value ){
-            return this.baseOpt_gsStringArrayFn( 'level.key1', value, { default: defaults.level.key1 });
+            return this.base_gsStringArrayFn( 'level.key1', value, { default: defaults.level.key1 });
         }
 
         /**
@@ -80,7 +80,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * @returns {String}
         */
         'level.key2'( value ){
-            return this.baseOpt_gsStringFn( 'level.key2', value, { default: defaults.level.key1, ref: myOptions.Constants });
+            return this.base_gsStringFn( 'level.key2', value, { default: defaults.level.key1, ref: myOptions.Constants });
         }
 
         /**
@@ -89,7 +89,7 @@ So you have to write a class which extends `Options.BaseOpt`  with one method fo
         * @returns {String}
         */
         key3( value ){
-            return this.baseOpt_gsIntegerFn( 'key3', value, { default: defaults.common.key3 });
+            return this.base_gsIntegerFn( 'key3', value, { default: defaults.common.key3 });
         }
     }
 ```
@@ -134,11 +134,11 @@ The globally exported object.
 
 ### Classes
 
-- `Options.BaseOpt`
+- `Options.Base`
 
     The class to be derived by the consumer.
 
-    - `BaseOpt( [options] )`
+    - `Base( [options] )`
 
         The constructor.
 
@@ -146,7 +146,7 @@ The globally exported object.
 
         If the caller expects the option values to change over the time, then it should also call the below `set()` method from inside an `autorun()` section.
 
-    - `baseOpt_gsBoolFn( name, value [, opts ] )`
+    - `base_gsBoolFn( name, value [, opts ] )`
 
         Manage a boolean argument.
 
@@ -164,29 +164,29 @@ The globally exported object.
 
         Note that if the returned/computed value is not valid according to the `check()` function, then we return the default value, which may itself be undefined. If the caller has not provided any valid default value, he must so prepare to handle that.
 
-    - `baseOpt_gsBoolFn( name, value [, opts ] )`
+    - `base_gsBoolFn( name, value [, opts ] )`
 
         Manage a boolean argument.
 
         Accepts also as a value a function which returns a boolean argument.
 
-    - `baseOpt_gsFn( name, value [, opts ] )`
+    - `base_gsFn( name, value [, opts ] )`
 
         Manage a function argument.
 
-    - `baseOpt_gsIntegerFn( name, value [, opts ] )`
+    - `base_gsIntegerFn( name, value [, opts ] )`
 
         Manage an integer argument.
 
         Accepts also as a value a function which returns an integer argument.
 
-    - `baseOpt_gsStringArrayFn( name, value [, opts ] )`
+    - `base_gsStringArrayFn( name, value [, opts ] )`
 
         Manage a string or an array of strings.
 
         Accepts also as a value a function which returns a string or an array of strings.
 
-    - `baseOpt_gsStringFn( name, value [, opts ] )`
+    - `base_gsStringFn( name, value [, opts ] )`
 
         Manage a string argument.
 
@@ -194,7 +194,7 @@ The globally exported object.
 
         Besides `check` and `default` keys, `opts` also accepts a `ref` argument which is expected to address an array of accepted values.
 
-    - `baseOpt_gsStringObjectFn( name, value [, opts ] )`
+    - `base_gsStringObjectFn( name, value [, opts ] )`
 
         Manage a string or an object.
 
@@ -202,11 +202,11 @@ The globally exported object.
 
         This is actually a method to handle internationalization where strings are provided not by their localized text value, but by an object `{ namespace, i18n }`.
 
-    - `baseOpt_options()`
+    - `baseions()`
 
         Returns the list of options.
 
-    - `baseOpt_set( options )`
+    - `base_set( options )`
 
         Set the new option values.
 

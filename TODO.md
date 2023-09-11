@@ -17,7 +17,7 @@
 
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
-|    1 | 2023- 2-18 | Have a better name for the BaseOpt methods |
+|    1 | 2023- 2-18 | Have a better name for the Base methods |
 |      | 2023- 7- 9 | done as of v 2.0.0 |
 
 ---
