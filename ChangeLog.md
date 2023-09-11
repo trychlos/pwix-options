@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.1.0-rc
+### 2.1.0
 
-    Release date: 
+    Release date: 2023- 9-11
 
     - Rename BaseOpt class to Base (bumping candidate version number)
 
@@ -66,4 +66,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, July 9th
+- Last updated on 2023, Sept. 11th
