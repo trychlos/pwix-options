@@ -25,7 +25,7 @@ Package.onTest( function( api ){
 function configure( api ){
     api.versionsFrom( '2.9.0' );
     api.use( 'ecmascript' );
-    api.use( 'pwix:i18n@1.3.2' );
+    api.use( 'pwix:i18n@1.5.0' );
     api.use( 'reactive-var' );
     api.use( 'tmeasday:check-npm-versions@1.0.2', 'server' );
 }
