@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.1.1-rc
+### 2.1.1
 
-    Release date: 
+    Release date: 2024- 5-24
 
     - Meteor 3.0 ready
     - Bump pwix:i18n version requirement
@@ -73,4 +73,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Sept. 11th
+- Last updated on 2024, May. 24th
