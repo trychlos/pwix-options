@@ -6,6 +6,7 @@
 
     Release date: 
 
+    - Meteor 3.0 ready
     - Bump pwix:i18n version requirement
 
 ### 2.1.0
