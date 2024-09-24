@@ -33,25 +33,27 @@ export class Base {
         const prefix = previous ? previous+'.' : '';
         const self = this;
 
-        Object.keys( object ).every(( name ) => {
-            if( typeof self[prefix+name] === 'function' ){
-                if( !Object.keys( self._conf ).includes( prefix+name )){
-                    self._conf[prefix+name] = {
-                        value: new ReactiveVar(),
-                        options: null
-                    };
+        if( object ){
+            Object.keys( object ).every(( name ) => {
+                if( typeof self[prefix+name] === 'function' ){
+                    if( !Object.keys( self._conf ).includes( prefix+name )){
+                        self._conf[prefix+name] = {
+                            value: new ReactiveVar(),
+                            options: null
+                        };
+                    }
+                    self[prefix+name]( object[name] );
+    
+                } else if( typeof object[name] === 'object' ){
+                    this._scan( object[name], prefix+name );
+    
+                } else if( Options._conf.errOnUnmanaged ){
+                    console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
                 }
-                self[prefix+name]( object[name] );
-
-            } else if( typeof object[name] === 'object' ){
-                this._scan( object[name], prefix+name );
-
-            } else if( Options._conf.errOnUnmanaged ){
-                console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
-            }
-
-            return true;
-        });
+    
+                return true;
+            });
+        }
     }
 
     // public data

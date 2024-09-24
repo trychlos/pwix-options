@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Protect the options scan from reaching a null content
 
 ### 2.1.1
 
