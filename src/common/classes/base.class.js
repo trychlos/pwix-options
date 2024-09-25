@@ -79,6 +79,11 @@ export class Base {
         }
     }
 
+    // make sure a ReactiveVar is present, even if the option has not been initialized the first time
+    _set_rv( name ){
+        this._conf[name].value = this._conf[name].value || new ReactiveVar();
+    }
+
     // public data
     //
 
@@ -116,6 +121,7 @@ export class Base {
     base_gsBoolFn( name, value, opts={} ){
         // if have options, merge them
         this._merge_options( name, opts );
+        this._set_rv( name );
         // as a setter, set the provided value
         if( value !== undefined ){
             if( value === true || value === false || typeof value === 'function' ){
@@ -158,6 +164,7 @@ export class Base {
     base_gsFn( name, value, opts={} ){
         // if have options, merge them
         this._merge_options( name, opts );
+        this._set_rv( name );
         // as a setter, set the provided value
         if( value !== undefined ){
             if( value === null || typeof value === 'function' ){
@@ -196,6 +203,7 @@ export class Base {
     base_gsIntegerFn( name, value, opts={} ){
         // if have options, merge them
         this._merge_options( name, opts );
+        this._set_rv( name );
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'function' ){
@@ -235,6 +243,7 @@ export class Base {
     base_gsStringArrayFn( name, value, opts={} ){
         // if have options, merge them
         this._merge_options( name, opts );
+        this._set_rv( name );
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || Array.isArray( value ) || typeof value === 'function' ){
@@ -281,6 +290,7 @@ export class Base {
     base_gsStringFn( name, value, opts={} ){
         // if have options, merge them
         this._merge_options( name, opts );
+        this._set_rv( name );
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
@@ -325,6 +335,7 @@ export class Base {
     base_gsStringObjectFn( name, value, opts={} ){
         // if have options, merge them
         this._merge_options( name, opts );
+        this._set_rv( name );
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
