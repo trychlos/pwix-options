@@ -10,9 +10,8 @@
 
 import _ from 'lodash';
 
-import { ReactiveVar } from 'meteor/reactive-var';
-
 import { pwixI18n } from 'meteor/pwix:i18n';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 export class Base {
 
@@ -23,7 +22,7 @@ export class Base {
     //
 
     // configuration options as an object which contains one ReactiveVar for each key
-    _conf = {};
+    #conf = {};
 
     // private functions
     //
@@ -31,8 +30,8 @@ export class Base {
     // returns the configured default value, or undefined
     _default_value( name ){
         let result = undefined;
-        if( this._conf[name] && this._conf[name].options && this._conf[name].options.default ){
-            let _default = this._conf[name].options.default;
+        if( this.#conf[name] && this.#conf[name].options && this.#conf[name].options.default ){
+            let _default = this.#conf[name].options.default;
             if( typeof _default === 'function' ){
                 _default = _default();
             }
@@ -44,8 +43,8 @@ export class Base {
     // merge provided options with those already registered
     _merge_options( name, opts ){
         if( opts ){
-            this._conf[name] = this._conf[name] || {};
-            this._conf[name].options = _.merge( {}, this._conf[name].options, opts );
+            this.#conf[name] = this.#conf[name] || {};
+            this.#conf[name].options = _.merge( {}, this.#conf[name].options || {}, opts );
         }
     }
 
@@ -58,8 +57,8 @@ export class Base {
         if( object ){
             Object.keys( object ).forEach(( name ) => {
                 if( typeof self[prefix+name] === 'function' ){
-                    if( !Object.keys( self._conf ).includes( prefix+name )){
-                        self._conf[prefix+name] = {
+                    if( !Object.keys( self.#conf ).includes( prefix+name )){
+                        self.#conf[prefix+name] = {
                             value: new ReactiveVar(),
                             options: null
                         };
@@ -78,7 +77,10 @@ export class Base {
 
     // make sure a ReactiveVar is present, even if the option has not been initialized the first time
     _set_rv( name ){
-        this._conf[name].value = this._conf[name].value || new ReactiveVar();
+        if( !this.#conf[name].value ){
+            this.#conf[name].value = new ReactiveVar();
+            //console.debug( 'definining RV for', name );
+        }
     }
 
     // public data
@@ -123,15 +125,15 @@ export class Base {
         if( value !== undefined ){
             if( value === true || value === false || typeof value === 'function' ){
                 //console.log( name, 'set value to', value );
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
         let result = undefined;
-        if( this._conf[name] && this._conf[name].value ){
-            result = this._conf[name].value.get();
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
         }
         if( typeof result === 'function' ){
             result = result();
@@ -140,8 +142,8 @@ export class Base {
             result = this._default_value( name );
         }
         if( result !== true && result !== false
-            && ( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
-            && ( this._conf[name].options.default !== undefined )){
+            && ( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result ))
+            && ( this.#conf[name].options.default !== undefined )){
                 result = this._default_value( name );
             }
         return result;
@@ -165,21 +167,21 @@ export class Base {
         // as a setter, set the provided value
         if( value !== undefined ){
             if( value === null || typeof value === 'function' ){
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
         let result = undefined;
-        if( this._conf[name] && this._conf[name].value ){
-            result = this._conf[name].value.get();
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
         }
         if( result === undefined ){
             result = this._default_value( name );
         }
         if( result !== undefined ){
-            if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+            if( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result )){
                 result = this._default_value( name );
             }
         }
@@ -204,15 +206,15 @@ export class Base {
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'function' ){
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else {
-                this._conf[name].value.set( parseInt( value ));
+                this.#conf[name].value.set( parseInt( value ));
             }
         }
         // as a getter
         let result = undefined;
-        if( this._conf[name] && this._conf[name].value ){
-            result = this._conf[name].value.get();
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
         }
         if( typeof result === 'function' ){
             result = result();
@@ -221,7 +223,7 @@ export class Base {
             result = this._default_value( name );
         }
         if( result !== undefined ){
-            if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+            if( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result )){
                 result = this._default_value( name );
             }
         }
@@ -244,15 +246,15 @@ export class Base {
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || Array.isArray( value ) || typeof value === 'function' ){
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
         let result = undefined;
-        if( this._conf[name] && this._conf[name].value ){
-            result = this._conf[name].value.get();
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
         }
         if( typeof result === 'function' ){
             result = result();
@@ -261,7 +263,7 @@ export class Base {
             result = this._default_value( name );
         }
         if( result !== undefined ){
-            if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+            if( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result )){
                 result = this._default_value( name );
             }
         }
@@ -291,15 +293,15 @@ export class Base {
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
         let result = undefined;
-        if( this._conf[name] && this._conf[name].value ){
-            result = this._conf[name].value.get();
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
         }
         if( typeof result === 'function' ){
             result = result();
@@ -308,8 +310,8 @@ export class Base {
             result = this._default_value( name );
         }
         if( result !== undefined ){
-            if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
-                || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
+            if(( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result ))
+                || ( this.#conf[name].options.ref && Array.isArray( this.#conf[name].options.ref ) && !this.#conf[name].options.ref.includes( result ))){
                     result = this._default_value( name );
             }
         }
@@ -336,17 +338,17 @@ export class Base {
         // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else if( typeof value === 'object' && Object.keys( value ).includes( 'i18n' ) && Object.keys( value ).includes( 'namespace' )){
-                this._conf[name].value.set( value );
+                this.#conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
         let result = undefined;
-        if( this._conf[name] && this._conf[name].value ){
-            result = this._conf[name].value.get();
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
         }
         if( typeof result === 'function' ){
             result = result();
@@ -357,8 +359,8 @@ export class Base {
             result = this._default_value( name );
         }
         if( result !== undefined ){
-            if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
-                || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
+            if(( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result ))
+                || ( this.#conf[name].options.ref && Array.isArray( this.#conf[name].options.ref ) && !this.#conf[name].options.ref.includes( result ))){
                         result = this._default_value( name );
             }
         }
@@ -369,7 +371,7 @@ export class Base {
      * @returns {Array} the list of defined option names
      */
     base_options(){
-        return Object.keys( this._conf );
+        return Object.keys( this.#conf );
     }
 
     /**

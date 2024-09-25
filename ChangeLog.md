@@ -9,6 +9,7 @@
     - Protect the options scan from reaching a null content
     - Fix the case where a default is defined as a not-defined option
     - Fix the case where a value is set outside of standard scan
+    - Make the private variable really private
 
 ### 2.1.1
 
