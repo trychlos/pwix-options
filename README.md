@@ -32,7 +32,8 @@ Then derive the provided `Options.Base` class once per configuration set, and pr
 ## Example
 
 Say you have a package or an application which accepts a configuration object as:
-```
+
+```js
     conf = {
         level: {
             key1: value1,
@@ -42,7 +43,8 @@ Say you have a package or an application which accepts a configuration object as
     }
 ```
 So you have to write a class which extends `Options.Base`  with one method for each configuration parameter:
-```
+
+```js
     export class myOptions extends Options.Base {
 
         static Constants = [
@@ -138,13 +140,13 @@ The globally exported object.
 
     The class to be derived by the consumer.
 
-    - `Base( [options] )`
+    - `Base( [options<Object>] )`
 
         The constructor.
 
         It accepts an optional list of options as an argument.
 
-        If the caller expects the option values to change over the time, then it should also call the below `set()` method from inside an `autorun()` section.
+        If the caller expects the option values to change over the time, then it should also call the corresponding getters from inside an `autorun()` section.
 
     - `base_gsBoolFn( name, value [, opts ] )`
 
@@ -202,11 +204,13 @@ The globally exported object.
 
         This is actually a method to handle internationalization where strings are provided not by their localized text value, but by an object `{ namespace, i18n }`.
 
-    - `baseions()`
+    - `base_options()`
 
-        Returns the list of options.
+        Returns the list of defined options.
 
-    - `base_set( options )`
+        This may not be the full list of known options. We only return here the options which have been either got or set.
+
+    - `base_set( options<Object> )`
 
         Set the new option values.
 

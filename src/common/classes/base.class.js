@@ -55,9 +55,8 @@ export class Base {
     _scan( object, previous='' ){
         const prefix = previous ? previous+'.' : '';
         const self = this;
-
         if( object ){
-            Object.keys( object ).every(( name ) => {
+            Object.keys( object ).forEach(( name ) => {
                 if( typeof self[prefix+name] === 'function' ){
                     if( !Object.keys( self._conf ).includes( prefix+name )){
                         self._conf[prefix+name] = {
@@ -73,8 +72,6 @@ export class Base {
                 } else if( Options._conf.errOnUnmanaged ){
                     console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
                 }
-    
-                return true;
             });
         }
     }
