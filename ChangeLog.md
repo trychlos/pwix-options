@@ -7,6 +7,7 @@
     Release date: 
 
     - Protect the options scan from reaching a null content
+    - Fix the case where a default is defined as a not-defined option
 
 ### 2.1.1
 

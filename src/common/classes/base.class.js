@@ -8,6 +8,8 @@
  *  the value at run time. And, more, we want these options be reactive.
  */
 
+import _ from 'lodash';
+
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { pwixI18n } from 'meteor/pwix:i18n';
@@ -25,6 +27,27 @@ export class Base {
 
     // private functions
     //
+
+    // returns the configured default value, or undefined
+    _default_value( name ){
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].options && this._conf[name].options.default ){
+            let _default = this._conf[name].options.default;
+            if( typeof _default === 'function' ){
+                _default = _default();
+            }
+            result = _default;
+        }
+        return result
+    }
+
+    // merge provided options with those already registered
+    _merge_options( name, opts ){
+        if( opts ){
+            this._conf[name] = this._conf[name] || {};
+            this._conf[name].options = _.merge( {}, this._conf[name].options, opts );
+        }
+    }
 
     // scan the object from higher levels to deeper ones to find the known options
     // - object: the object to be scanned
@@ -91,6 +114,9 @@ export class Base {
      *  which may happen to be undefined :(
      */
     base_gsBoolFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        // as a setter, set the provided value
         if( value !== undefined ){
             if( value === true || value === false || typeof value === 'function' ){
                 //console.log( name, 'set value to', value );
@@ -98,24 +124,23 @@ export class Base {
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
-            this._conf[name].options = opts;
         }
-        let result = this._conf[name].value.get();
-        //console.log( name, 'set result to', result );
+        // as a getter
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].value ){
+            result = this._conf[name].value.get();
+        }
         if( typeof result === 'function' ){
             result = result();
+        }
+        if( result === undefined ){
+            result = this._default_value( name );
         }
         if( result !== true && result !== false
             && ( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
             && ( this._conf[name].options.default !== undefined )){
-
-                let _default = this._conf[name].options.default;
-                if( typeof _default === 'function' ){
-                    _default = _default();
-                }
-                result = _default;
-        }
-        //console.log( name, 'return result', result );
+                result = this._default_value( name );
+            }
         return result;
     }
 
@@ -131,18 +156,28 @@ export class Base {
      *  which may happen to be undefined :(
      */
     base_gsFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        // as a setter, set the provided value
         if( value !== undefined ){
             if( value === null || typeof value === 'function' ){
                 this._conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
-            this._conf[name].options = opts;
         }
-        let result = this._conf[name].value.get();
-        if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
-            let _default = this._conf[name].options.default;
-            result = _default;
+        // as a getter
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].value ){
+            result = this._conf[name].value.get();
+        }
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+                result = this._default_value( name );
+            }
         }
         return result;
     }
@@ -159,24 +194,31 @@ export class Base {
      *  which may happen to be undefined :(
      */
     base_gsIntegerFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'function' ){
                 this._conf[name].value.set( value );
             } else {
                 this._conf[name].value.set( parseInt( value ));
             }
-            this._conf[name].options = opts;
         }
-        let result = this._conf[name].value.get();
+        // as a getter
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].value ){
+            result = this._conf[name].value.get();
+        }
         if( typeof result === 'function' ){
             result = result();
         }
-        if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
-            let _default = this._conf[name].options.default;
-            if( typeof _default === 'function' ){
-                _default = _default();
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+                result = this._default_value( name );
             }
-            result = _default;
         }
         return result;
     }
@@ -191,25 +233,31 @@ export class Base {
      * @returns {Array} an array of strings
      */
     base_gsStringArrayFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || Array.isArray( value ) || typeof value === 'function' ){
                 this._conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
-            this._conf[name].options = opts;
-            //console.log( this );
         }
-        let result = this._conf[name].value.get();
+        // as a getter
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].value ){
+            result = this._conf[name].value.get();
+        }
         if( typeof result === 'function' ){
             result = result();
         }
-        if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
-            let _default = this._conf[name].options.default;
-            if( typeof _default === 'function' ){
-                _default = _default();
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result )){
+                result = this._default_value( name );
             }
-            result = _default;
         }
         result = result || '';
         if( !Array.isArray( result )){
@@ -231,26 +279,32 @@ export class Base {
      *  then we return the default value - or at least an empty string
      */
     base_gsStringFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
                 this._conf[name].value.set( value );
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
-            this._conf[name].options = opts;
         }
-        let result = this._conf[name].value.get();
+        // as a getter
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].value ){
+            result = this._conf[name].value.get();
+        }
         if( typeof result === 'function' ){
             result = result();
         }
-        if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
-            || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
-
-                let _default = this._conf[name].options.default;
-                if( typeof _default === 'function' ){
-                    _default = _default();
-                }
-                result = _default;
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
+                || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
+                    result = this._default_value( name );
+            }
         }
         return result || '';
     }
@@ -269,6 +323,9 @@ export class Base {
      *  then we return the default value - or at least an empty string
      */
     base_gsStringObjectFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        // as a setter, set the provided value
         if( value !== undefined ){
             if( typeof value === 'string' || typeof value === 'function' ){
                 this._conf[name].value.set( value );
@@ -277,22 +334,25 @@ export class Base {
             } else {
                 console.error( name, 'invalid argument:', value, opts );
             }
-            this._conf[name].options = opts;
         }
-        let result = this._conf[name].value.get();
+        // as a getter
+        let result = undefined;
+        if( this._conf[name] && this._conf[name].value ){
+            result = this._conf[name].value.get();
+        }
         if( typeof result === 'function' ){
             result = result();
         } else if( typeof result === 'object' && Object.keys( result ).includes( 'i18n' ) && Object.keys( result ).includes( 'namespace' )){
             result = pwixI18n.label( result.namespace, result.i18n );
         }
-        if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
-            || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
-
-                let _default = this._conf[name].options.default;
-                if( typeof _default === 'function' ){
-                    _default = _default();
-                }
-                result = _default;
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if(( this._conf[name].options.check && typeof this._conf[name].options.check === 'function' && !this._conf[name].options.check( result ))
+                || ( this._conf[name].options.ref && Array.isArray( this._conf[name].options.ref ) && !this._conf[name].options.ref.includes( result ))){
+                        result = this._default_value( name );
+            }
         }
         return result || '';
     }
@@ -309,7 +369,7 @@ export class Base {
      * @param {Object} options the options to be managed (may be empty, but must be defined)
      */
     base_set( options ){
-        // allocate a new reactive var for each known option and set it
+        // allocate a new reactive var for each passed option and set it
         this._scan( options );
     }
 }
