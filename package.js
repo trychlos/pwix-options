@@ -1,6 +1,6 @@
 Package.describe({
     name: 'pwix:options',
-    version: '2.1.2',
+    version: '2.1.3-rc',
     summary: 'Configuration options management',
     git: 'https://github.com/trychlos/pwix-options',
     documentation: 'README.md'
