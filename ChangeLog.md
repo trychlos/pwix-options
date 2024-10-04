@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.1.2-rc
+### 2.1.2
 
-    Release date: 
+    Release date: 2024-10- 4
 
     - Protect the options scan from reaching a null content
     - Fix the case where a default is defined as a not-defined option
@@ -82,4 +82,4 @@
 
 ---
 P. Wieser
-- Last updated on 2024, May. 24th
+- Last updated on 2024, Oct. 4th
