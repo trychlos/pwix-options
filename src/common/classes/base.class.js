@@ -380,6 +380,7 @@ export class Base {
      */
     base_set( options ){
         // allocate a new reactive var for each passed option and set it
+        //console.debug( 'options', options );
         this._scan( options );
     }
 }
