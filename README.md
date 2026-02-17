@@ -19,15 +19,18 @@ The exported `Base` class provides the methods required to:
 - associates each configuration option with a reactive var
 - making sure the returned value is compatible with the desired type and is reactive.
 
+## Installation
+
+This Meteor package is installable with the usual command:
+
+```sh
+    meteor add pwix:options
+    meteor npm install lodash --save
+```
+
 ## Usage
 
-Add the package to your application.
-
-```
-    meteor add pwix:options
-```
-
-Then derive the provided `Options.Base` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
+After having installed the package, then derive the provided `Options.Base` class once per configuration set, and provide a getter/setter method for each configuration option you want to manage.
 
 ## Example
 
@@ -42,6 +45,7 @@ Say you have a package or an application which accepts a configuration object as
         key3: value3
     }
 ```
+
 So you have to write a class which extends `Options.Base`  with one method for each configuration parameter:
 
 ```js
@@ -226,13 +230,27 @@ In accordance with advices from [the Meteor Guide](https://guide.meteor.com/writ
 
 Dependencies as of v 2.1.0:
 
-```
+```js
     'lodash': '^4.17.0'
+```
+
+Each of these dependencies should be installed at application level:
+
+```sh
+    meteor npm install <package> --save
 ```
 
 ## Translations
 
 New and updated translations are willingly accepted, and more than welcome. Just be kind enough to submit a PR on the [Github repository](https://github.com/trychlos/pwix-options/pulls).
+
+## Cookies and comparable technologies
+
+None at the moment.
+
+## Issues & help
+
+In case of support or error, please report your issue request to our [Issues tracker](https://github.com/trychlos/pwix-options/issues).
 
 ---
 P. Wieser

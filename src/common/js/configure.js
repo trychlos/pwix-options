@@ -4,7 +4,8 @@
 
 import _ from 'lodash';
 
-Options._conf = {};
+let _conf = {};
+Options._conf = new ReactiveVar( _conf );
 
 Options._defaults = {
     errOnUnmanaged: false,
@@ -19,14 +20,27 @@ Options._defaults = {
  */
 Options.configure = function( o ){
     if( o && _.isObject( o )){
-        _.merge( Options._conf, Options._defaults, o );
-        // be verbose if asked for
-        if( Options._conf.verbosity & Options.C.Verbose.CONFIGURE ){
-            console.debug( 'pwix:admin-first configure() with', o, 'building', Options._conf );
+        // check that keys exist
+        let built_conf = {};
+        Object.keys( o ).forEach(( it ) => {
+            if( Object.keys( Options._defaults ).includes( it )){
+                built_conf[it] = o[it];
+            } else {
+                console.warn( 'pwix:options configure() ignore unmanaged key \''+it+'\'' );
+            }
+        });
+        if( Object.keys( built_conf ).length ){
+            _conf = _.merge( Options._defaults, _conf, built_conf );
+            Options._conf.set( _conf );
+            // be verbose if asked for
+            if( _conf.verbosity & Options.C.Verbose.CONFIGURE ){
+                console.debug( 'pwix:options configure() with', built_conf );
+            }
         }
     }
     // also acts as a getter
-    return Options._conf;
+    return Options._conf.get();
 }
 
-_.merge( Options._conf, Options._defaults );
+_conf = _.merge( {}, Options._defaults );
+Options._conf.set( _conf );

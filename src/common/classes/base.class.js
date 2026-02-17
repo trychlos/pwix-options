@@ -68,7 +68,7 @@ export class Base {
                 } else if( typeof object[name] === 'object' ){
                     this._scan( object[name], prefix+name );
     
-                } else if( Options._conf.errOnUnmanaged ){
+                } else if( Options.configure().errOnUnmanaged ){
                     console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
                 }
             });
