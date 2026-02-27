@@ -1,6 +1,6 @@
 Package.describe({
     name: 'pwix:options',
-    version: '2.1.3-rc',
+    version: '2.2.0-rc',
     summary: 'Configuration options management',
     git: 'https://github.com/trychlos/pwix-options',
     documentation: 'README.md'
@@ -26,6 +26,7 @@ function configure( api ){
     api.versionsFrom([ '2.9.0', '3.0-rc.0' ]);
     api.use( 'ecmascript' );
     api.use( 'pwix:i18n@1.5.7' );
+    api.use( 'pwix:logger@1.0.0-rc' );
     api.use( 'reactive-var' );
     api.use( 'tmeasday:check-npm-versions@1.0.2 || 2.0.0-beta.0', 'server' );
 }

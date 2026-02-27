@@ -10,8 +10,11 @@
 
 import _ from 'lodash';
 
+import { Logger } from 'meteor/pwix:logger';
 import { pwixI18n } from 'meteor/pwix:i18n';
 import { ReactiveVar } from 'meteor/reactive-var';
+
+const logger = Logger.get();
 
 export class Base {
 
@@ -69,7 +72,7 @@ export class Base {
                     this._scan( object[name], prefix+name );
     
                 } else if( Options.configure().errOnUnmanaged ){
-                    console.error( self.constructor.name+': unmanaged configuration option \''+prefix+name+'\'' );
+                    logger.error( self.constructor.name+'() unmanaged configuration option \''+prefix+name+'\'' );
                 }
             });
         }
@@ -79,7 +82,7 @@ export class Base {
     _set_rv( name ){
         if( !this.#conf[name].value ){
             this.#conf[name].value = new ReactiveVar();
-            //console.debug( 'definining RV for', name );
+            //logger.debug( 'definining RV for', name );
         }
     }
 
@@ -124,10 +127,10 @@ export class Base {
         // as a setter, set the provided value
         if( value !== undefined ){
             if( value === true || value === false || typeof value === 'function' ){
-                //console.log( name, 'set value to', value );
+                //logger.log( name, 'set value to', value );
                 this.#conf[name].value.set( value );
             } else {
-                console.error( name, 'invalid argument:', value, opts );
+                logger.error( 'Base.base_gsBoolFn()', name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
@@ -169,7 +172,7 @@ export class Base {
             if( value === null || typeof value === 'function' ){
                 this.#conf[name].value.set( value );
             } else {
-                console.error( name, 'invalid argument:', value, opts );
+                logger.error( 'Base.base_gsFn()', name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
@@ -248,7 +251,7 @@ export class Base {
             if( typeof value === 'string' || Array.isArray( value ) || typeof value === 'function' ){
                 this.#conf[name].value.set( value );
             } else {
-                console.error( name, 'invalid argument:', value, opts );
+                logger.error( 'Base.base_gsStringArrayFn()', name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
@@ -295,7 +298,7 @@ export class Base {
             if( typeof value === 'string' || typeof value === 'function' ){
                 this.#conf[name].value.set( value );
             } else {
-                console.error( name, 'invalid argument:', value, opts );
+                logger.error( 'Base.base_gsStringFn()', name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
@@ -342,7 +345,7 @@ export class Base {
             } else if( typeof value === 'object' && Object.keys( value ).includes( 'i18n' ) && Object.keys( value ).includes( 'namespace' )){
                 this.#conf[name].value.set( value );
             } else {
-                console.error( name, 'invalid argument:', value, opts );
+                logger.error( 'Base.base_gsStringObjectFn()', name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
@@ -380,7 +383,7 @@ export class Base {
      */
     base_set( options ){
         // allocate a new reactive var for each passed option and set it
-        //console.debug( 'options', options );
+        //logger.debug( 'options', options );
         this._scan( options );
     }
 }
