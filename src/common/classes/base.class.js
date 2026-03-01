@@ -193,8 +193,8 @@ export class Base {
 
     /**
      * @summary Get or set a configuration option as an integer or a function
-     * @param {String} name 
-     * @param {Integer|Function} value 
+     * @param {String} name
+     * @param {Integer|Function} value
      * @param {Object} opts
      *  check: an optional check function, called with the value, must return true or false
      *  default: an optional default value, or a function which returns a default value
@@ -212,6 +212,48 @@ export class Base {
                 this.#conf[name].value.set( value );
             } else {
                 this.#conf[name].value.set( parseInt( value ));
+            }
+        }
+        // as a getter
+        let result = undefined;
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
+        }
+        if( typeof result === 'function' ){
+            result = result();
+        }
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result )){
+                result = this._default_value( name );
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @summary Get or set a configuration option as an integer or a string or a function
+     * @param {String} name 
+     * @param {Integer|String|Function} value 
+     * @param {Object} opts
+     *  check: an optional check function, called with the value, must return true or false
+     *  default: an optional default value, or a function which returns a default value
+     * @returns {Integer|String}
+     *  if the returned/computed value is not valid according to the check function, then we return the default value
+     *  which may happen to be undefined :(
+     */
+    base_gsIntegerStringFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        this._set_rv( name );
+        // as a setter, set the provided value
+        if( value !== undefined ){
+            if( _.isInteger( value ) || _.isString( value ) || _.isFunction( value )){
+                this.#conf[name].value.set( value );
+            } else {
+                logger.error( 'Base.base_gsIntegerStringFn()', name, 'invalid argument:', value, opts );
             }
         }
         // as a getter
