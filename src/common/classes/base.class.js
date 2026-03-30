@@ -276,6 +276,97 @@ export class Base {
     }
 
     /**
+     * @summary Get or set a configuration option as an object or a function
+     * @param {String} name
+     * @param {Object|Function} value
+     * @param {Object} opts
+     *  check: an optional check function, called with the value, must return true or false
+     *  default: an optional default value, or a function which returns a default value
+     *  ref: an optional array which contains accepted values
+     * @returns {Object}
+     *  if the returned/computed value is not valid according to the check function or the reference array,
+     *  then we return the default value
+     *  which may happen to be undefined
+     */
+    base_gsObjectFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        this._set_rv( name );
+        // as a setter, set the provided value
+        if( value !== undefined ){
+            if( typeof value === 'object' || typeof value === 'function' ){
+                this.#conf[name].value.set( value );
+            } else {
+                logger.error( 'Base.base_gsObjectFn()', name, 'invalid argument:', value, opts );
+            }
+        }
+        // as a getter
+        let result = undefined;
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
+        }
+        if( typeof result === 'function' ){
+            result = result();
+        }
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== undefined ){
+            if(( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result ))
+                || ( this.#conf[name].options.ref && Array.isArray( this.#conf[name].options.ref ) && !this.#conf[name].options.ref.includes( result ))){
+                    result = this._default_value( name );
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @summary Get or set a configuration option as a regex, an array of regexes, or a function
+     * @param {String} name 
+     * @param {Regex|Array|Function} value 
+     * @param {Object} opts
+     *  check: an optional check function, called with the value, must return true or false
+     *  default: an optional default value, or a function which returns a default value
+     * @returns {Array}
+     *  if the returned/computed value is not valid according to the check function, then we return the default value
+     *  which may happen to be undefined :(
+     */
+    base_gsRegexArrayFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        this._set_rv( name );
+        // as a setter, set the provided value
+        if( value !== undefined ){
+            if( value instanceof RegExp || typeof value === 'array' || typeof value === 'function' ){
+                //logger.log( name, 'set value to', value );
+                this.#conf[name].value.set( value );
+            } else {
+                logger.error( 'Base.base_gsArrayFn()', name, 'invalid argument:', value, opts );
+            }
+        }
+        // as a getter
+        let result = undefined;
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
+        }
+        if( typeof result === 'function' ){
+            result = result();
+        }
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        if( result !== true && result !== false
+            && ( this.#conf[name].options.check && typeof this.#conf[name].options.check === 'function' && !this.#conf[name].options.check( result ))
+            && ( this.#conf[name].options.default !== undefined )){
+                result = this._default_value( name );
+            }
+        if( result && !Array.isArray( result )){
+            result= [ result ];
+        }
+        return result;
+    }
+
+    /**
      * @summary Get or set a configuration option as a string, an array or a function
      * @param {String} name 
      * @param {String|Array|Function} value 

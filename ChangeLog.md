@@ -9,6 +9,8 @@
     - configure() now warns for unmanaged keys
     - Use pwix:logger universal logger, thus bumping minor candidate version number
     - Define new Base.gsIntegerStringFn() method
+    - Define new Base.gsObjectFn() method
+    - Define new Base.gsRegexArrayFn() method
 
 ### 2.1.2
 
