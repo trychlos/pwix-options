@@ -100,9 +100,121 @@ So you have to write a class which extends `Options.Base`  with one method for e
     }
 ```
 
+## What does it provide ?
+
+### `Options`
+
+The globally exported object.
+
+### Classes
+
+- `Options.Base`
+
+    The class to be derived by the consumer.
+
+    - `Base( [options<Object>] )`
+
+        The constructor.
+
+        It accepts an optional list of options as an argument.
+
+        If the caller expects the option values to change over the time, then it should also call the corresponding getters from inside an `autorun()` section.
+
+    - `base_get_set_options()`
+
+        Returns the list of set options.
+
+        This may not be the full list of known options. We only return here the options which have been explicitely set. So calling `base_get_set_options()` let you know which options have been really set.
+
+    - `base_gsBoolFn( name, value [, opts ] )`
+
+        Manage a boolean argument.
+
+        Accepts also as a value a function which returns a boolean argument.
+
+        `opts` is an optional option object with keys:
+
+        - `check`
+
+            An optional check function, called with the provided value, must return `true` or `false`
+
+        - `default`
+
+            An optional default value, or a function which returns the default value
+
+        Note that if the returned/computed value is not valid according to the `check()` function, then we return the default value, which may itself be undefined. If the caller has not provided any valid default value, he must so prepare to handle that.
+
+    - `base_gsFn( name, value [, opts ] )`
+
+        Manage a function argument.
+
+    - `base_gsIntegerFn( name, value [, opts ] )`
+
+        Manage an integer argument.
+
+        Accepts also as a value a function which returns an integer argument.
+
+    - `base_gsIntegerStringFn( name, value [, opts ] )`
+
+        Manage an argument as integer or a string.
+
+        Accepts also as a value a function which returns an integer or a string argument.
+
+    - `base_gsObjectFn( name, value [, opts ] )`
+
+        Manage an opaque object.
+
+        Accepts also as a value a function which returns an object.
+
+    - `base_gsRegexArrayFn( name, value [, opts ] )`
+
+        Manage a regular expression or an array of regular expressions.
+
+        Accepts also as a value a function which returns a regular expression or an array of regular expressions.
+
+        Returns an array of regular expressions, which may be empty.
+
+    - `base_gsStringArrayFn( name, value [, opts ] )`
+
+        Manage a string or an array of strings.
+
+        Accepts also as a value a function which returns a string or an array of strings.
+
+    - `base_gsStringFn( name, value [, opts ] )`
+
+        Manage a string argument.
+
+        Accepts also as a value a function which returns a string argument.
+
+        Besides `check` and `default` keys, `opts` also accepts a `ref` argument which is expected to address an array of accepted values.
+
+    - `base_gsStringObjectFn( name, value [, opts ] )`
+
+        Manage a string or an object.
+
+        Accepts also as a value a function which returns a string or an object.
+
+        This is actually a method to handle internationalization where strings are provided not by their localized text value, but by an object `{ namespace, i18n }`.
+
+    - `base_options()`
+
+        Returns the list of used options.
+
+        This may not be the full list of known options. We only return here the options which have been either got or set.
+
+    - `base_set( options<Object> )`
+
+        Set the new option values.
+
+### Functions
+
+- `Options.configure()`
+
+    The configuration function (see below)[#configuration].
+
 ## Configuration
 
-The package's behavior can be configured through a call to the `Options.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
+The package's behavior can be configured through a call to the `Options.configure()` function, with just a single javascript object argument, which itself should only contains the options you want override.
 
 Known configuration options are:
 
@@ -131,98 +243,6 @@ Known configuration options are:
 Please note that `Options.configure()` method should be called in the same terms both in client and server sides.
 
 Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `Options.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
-
-## What does it provide ?
-
-### `Options`
-
-The globally exported object.
-
-### Classes
-
-- `Options.Base`
-
-    The class to be derived by the consumer.
-
-    - `Base( [options<Object>] )`
-
-        The constructor.
-
-        It accepts an optional list of options as an argument.
-
-        If the caller expects the option values to change over the time, then it should also call the corresponding getters from inside an `autorun()` section.
-
-    - `base_gsBoolFn( name, value [, opts ] )`
-
-        Manage a boolean argument.
-
-        Accepts also as a value a function which returns a boolean argument.
-
-        `opts` is an optional option object with keys:
-
-        - `check`
-
-            An optional check function, called with the provided value, must return `true` or `false`
-
-        - `default`
-
-            An optional default value, or a function which returns the default value
-
-        Note that if the returned/computed value is not valid according to the `check()` function, then we return the default value, which may itself be undefined. If the caller has not provided any valid default value, he must so prepare to handle that.
-
-    - `base_gsBoolFn( name, value [, opts ] )`
-
-        Manage a boolean argument.
-
-        Accepts also as a value a function which returns a boolean argument.
-
-    - `base_gsFn( name, value [, opts ] )`
-
-        Manage a function argument.
-
-    - `base_gsIntegerFn( name, value [, opts ] )`
-
-        Manage an integer argument.
-
-        Accepts also as a value a function which returns an integer argument.
-
-    - `base_gsStringArrayFn( name, value [, opts ] )`
-
-        Manage a string or an array of strings.
-
-        Accepts also as a value a function which returns a string or an array of strings.
-
-    - `base_gsStringFn( name, value [, opts ] )`
-
-        Manage a string argument.
-
-        Accepts also as a value a function which returns a string argument.
-
-        Besides `check` and `default` keys, `opts` also accepts a `ref` argument which is expected to address an array of accepted values.
-
-    - `base_gsStringObjectFn( name, value [, opts ] )`
-
-        Manage a string or an object.
-
-        Accepts also as a value a function which returns a string or an object.
-
-        This is actually a method to handle internationalization where strings are provided not by their localized text value, but by an object `{ namespace, i18n }`.
-
-    - `base_options()`
-
-        Returns the list of defined options.
-
-        This may not be the full list of known options. We only return here the options which have been either got or set.
-
-    - `base_set( options<Object> )`
-
-        Set the new option values.
-
-### Methods
-
-- `Options.configure()`
-
-    The configuration method.
 
 ## NPM peer dependencies
 

@@ -27,6 +27,9 @@ export class Base {
     // configuration options as an object which contains one ReactiveVar for each key
     #conf = {};
 
+    // explicitely set configuration options
+    #conf_set = {};
+
     // private functions
     //
 
@@ -59,6 +62,7 @@ export class Base {
         const self = this;
         if( object ){
             Object.keys( object ).forEach(( name ) => {
+                self.#conf_set[prefix+name] = true;
                 if( typeof self[prefix+name] === 'function' ){
                     if( !Object.keys( self.#conf ).includes( prefix+name )){
                         self.#conf[prefix+name] = {
@@ -98,7 +102,7 @@ export class Base {
      * @param {Object} options the options to be managed (optional)
      *  The options can be passed to the class either at construction time, and/or through the base_set() method.
      *  Rationale: option values may change over the time, and we do not want this class be a break to their reactivity.
-     *  The caller may pass options to this constructor, but should too call the base_set() method from an autorun() section.
+     *  The caller may pass options to this constructor, but could too call the base_set() method from an autorun() section.
      *
      * @returns {Base}
      */
@@ -107,6 +111,13 @@ export class Base {
             this.base_set( options );
         }
         return this;
+    }
+
+    /**
+     * @param {Array} the list of options which have been explicitely set
+     */
+    base_get_set_options(){
+        return Object.keys( this.#conf_set );
     }
 
     /**
@@ -504,7 +515,7 @@ export class Base {
     }
 
     /**
-     * @returns {Array} the list of defined option names
+     * @returns {Array} the list of used option names
      */
     base_options(){
         return Object.keys( this.#conf );

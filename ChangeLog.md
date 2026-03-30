@@ -11,6 +11,7 @@
     - Define new Base.gsIntegerStringFn() method
     - Define new Base.gsObjectFn() method
     - Define new Base.gsRegexArrayFn() method
+    - Define new Base.get_set_options() method
 
 ### 2.1.2
 
