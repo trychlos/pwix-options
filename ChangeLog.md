@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.2.0-rc
+### 2.2.0
 
-    Release date: 
+    Release date: 2026- 4- 1
 
     - configure() now warns for unmanaged keys
     - Use pwix:logger universal logger, thus bumping minor candidate version number
@@ -94,4 +94,4 @@
 
 ---
 P. Wieser
-- Last updated on 2024, Oct. 4th
+- Last updated on 2026, Apr. 1st
