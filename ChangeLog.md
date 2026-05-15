@@ -13,6 +13,7 @@
     - Define new Base.gsRegexArrayFn() method
     - Define new Base.get_set_options() method
     - Define new Base.gsArrayFn() method
+    - Define new Base.gsAnyFn() method
 
 ### 2.1.2
 

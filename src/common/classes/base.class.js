@@ -121,6 +121,36 @@ export class Base {
     }
 
     /**
+     * @summary Get or set a configuration option as anything (or a function)
+     * @param {String} name 
+     * @param {Any} value 
+     * @param {Object} opts
+     *  default: an optional default value, or a function which returns a default value
+     * @returns {Any}
+     */
+    base_gsAnyFn( name, value, opts={} ){
+        // if have options, merge them
+        this._merge_options( name, opts );
+        this._set_rv( name );
+        // as a setter, set the provided value
+        if( value !== undefined ){
+            this.#conf[name].value.set( value );
+        }
+        // as a getter
+        let result = undefined;
+        if( this.#conf[name] && this.#conf[name].value ){
+            result = this.#conf[name].value.get();
+        }
+        if( typeof result === 'function' ){
+            result = result();
+        }
+        if( result === undefined ){
+            result = this._default_value( name );
+        }
+        return result;
+    }
+
+    /**
      * @summary Get or set a configuration option as an array or a function
      * @param {String} name 
      * @param {Array|Function} value 
