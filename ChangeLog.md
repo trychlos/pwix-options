@@ -2,7 +2,7 @@
 
 ## ChangeLog
 
-### 2.2.0-rc
+### 2.2.1-rc
 
     Release date: 
 
