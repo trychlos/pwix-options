@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Improve README
 
 ### 2.2.1
 

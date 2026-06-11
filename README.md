@@ -164,7 +164,25 @@ The globally exported object.
 
         Manage an opaque object.
 
-        Accepts also as a value a function which returns an object.
+        The provided value MUST be a function which returns an object.
+
+        Example:
+
+```js
+        const instance = new myClass({
+            //hooksCommon: {}
+            hooksCommon: {
+                createAccountFn: Identities.fn.serializeNew,
+                createAccountArgs(){ return {
+                    organization
+                }; },
+                updateAccountFn: Identities.fn.serializeUpdate,
+                updateAccountArgs(){ return {
+                    organization
+                }; },
+            }
+        });
+```
 
     - `base_gsRegexArrayFn( name, value [, opts ] )`
 
