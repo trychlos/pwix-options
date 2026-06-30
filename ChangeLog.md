@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.2.2-rc.0
+### 2.2.2
 
-    Release date: 
+    Release date: 2026- 6-30
 
     - Improve README
 
@@ -101,4 +101,4 @@
 
 ---
 P. Wieser
-- Last updated on 2026, May. 31st
+- Last updated on 2026, Jun. 30th
